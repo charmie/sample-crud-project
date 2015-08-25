@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 //use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -38,14 +39,7 @@ class UsersController extends Controller
 
     public function getDatatable()
     {
-        /*
-        dd(Datatable::collection(User::all(array('id','username')))
-        ->showColumns('id', 'username')
-        ->searchColumns('username')
-        ->orderColumns('id','username')
-        ->make(true));
-        */
-        //dd(User::all());
+        
         return Datatable::collection(User::all(array('id','username')))
         ->showColumns('id', 'username')
         ->addColumn('dropdown',
@@ -73,7 +67,9 @@ class UsersController extends Controller
 
     public function createUser(){
         $data = Request::all();
-
+        
+        
+        $data['password'] = Hash::make($data['password']);
         User::create($data);
         //return $data;        
         return redirect('users');

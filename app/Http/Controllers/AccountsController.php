@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -31,6 +32,37 @@ class AccountsController extends Controller
      * User login submit
      */
     public function userLogin(){
+        $data = Input::all();
+        
+
+        $rules = array(
+            'username' => 'required',
+            'password' => 'required',
+        );
+        $validator = Validator::make($data, $rules);
+        
+        
+
+        if ($validator->fails()){
+            echo "failed";
+        }
+        else {
+            $userdata = array(
+                'username' => Input::get('username'),
+                'password' => Input::get('password')
+              );
+        }
+        //dd($userdata);
+        $userData = array('username' => $userdata['username'], 'password' => $userdata['password']);            
+        
+
+        $test = Auth::attempt($userData);
+        dd($test);
+
+        return (string) Auth::attempt($userdata);
+        
+
+        /*
         // Getting all post data
         $data = Request::all();
         //dd($data);
@@ -62,6 +94,7 @@ class AccountsController extends Controller
                 echo "wait";
             }
         }
+        */
         
     }
 }
