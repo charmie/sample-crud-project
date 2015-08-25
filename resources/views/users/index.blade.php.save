@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+
+	<body>
+		<h
+1>All Users</h1>
+		@foreach($users as $user)
+			{{ $user }}
+			<li>{{ $user->username }}</li>
+		
+		@endforeach
+	</body>
+</html>
