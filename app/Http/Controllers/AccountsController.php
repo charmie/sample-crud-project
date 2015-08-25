@@ -54,47 +54,31 @@ class AccountsController extends Controller
         }
         //dd($userdata);
         $userData = array('username' => $userdata['username'], 'password' => $userdata['password']);            
+
+        $attempt = Auth::attempt($userData);
+        //dd($attempt);
         
-
-        $test = Auth::attempt($userData);
-        dd($test);
-
-        return (string) Auth::attempt($userdata);
-        
-
-        /*
-        // Getting all post data
-        $data = Request::all();
-        //dd($data);
-        
-        // Applying validation rules.
-        $rules = array(
-            'username' => 'required',
-            'password' => 'required|min:6' ,
-             );
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()){
-          // If validation falis redirect back to login.
-          //return Redirect::to('/')->withInput(Input::except('password'))->withErrors($validator);
-            echo "failed";
+        if($attempt){
+            //dd('sup');
+            return redirect('accounts/dashboard');
         }
-        else {
-          $userdata = array(
-                'username' => Request::get('username'),
-                'password' => Request::get('password')
-              );
-          
-            
-            if (Auth::attempt(array('username' => Request::get('username'), 'password' => Request::get('password')))){
-                echo "success";
-                Session::flash('message', 'Success'); 
-            }
-            else{
-                echo "wait";
-            }
+        else{
+            return redirect('accounts/halt');
         }
-        */
-        
+       
+    }
+
+    /*
+        user account dashboard
+    */
+    public function dashboard(){
+        return view('accounts.dashboard');
+    }
+
+    /*
+        user account halt
+    */
+    public function halt(){
+        return view('accounts.halt');
     }
 }

@@ -70,30 +70,7 @@ Route::get('/', function () {
 	*/
     
 });
-/*
-Route::get('users',function(){
-	$users = App\User::all();
-	//$users = App\User::find(1);
-	$name = 'Charm';
-	return view('users.index',['users'=>$users]);
-	//dd($users->toArray());
-	//return view('users.index')->with('users',$users->toArray());
-});
 
-Route::get('users/{username}',function($username){
-	$user = App\User::whereUsername($username)->first();
-	return view('users.show',['user' => $user]);
-});
-
- Route::get('contact','TestController@contact');
- Route::get('greetViewer','TestController@returnView');
-
- */
- /*
- Route::controllers([
-'users'       => 'UsersController'
-]);
-*/
  Route::get('about','PagesController@about');
  Route::get('contact','PagesController@contact');
  Route::get('articles','ArticlesController@index');
@@ -116,24 +93,8 @@ Route::get('users/{username}',function($username){
  Route::get('accounts/login','AccountsController@login');
  Route::post('accounts/userLogin','AccountsController@userLogin');
 
- //Route::get('users/{userid}/edit','UsersController@edit');
-/*
- Route::get('users/edit/{id}','UsersController@edit');
- Route::get('users/saveEdit','UsersController@saveEdit');
 
-*/
- 
- /*
- Route::get('users/edit/{id}', array('as' => 'users.edit', function($id) 
-    {
-        // return our view and Nerd information
-        return View::make('users.edit') // pulls app/views/nerd-edit.blade.php
-            ->with('users', App\User::find($id));
-    }));
+	Route::get('accounts/dashboard','AccountsController@dashboard');
+	Route::get('accounts/halt','AccountsController@halt');
 
-    // route to process the form
  
-    Route::post('users/saveEdit', array('as' => 'users.saveEdit'),function() {
-        // process our form
-    });
-    */
