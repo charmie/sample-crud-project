@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
-use Auth;
+//use Auth;
 use App\User;
+use App\ActivityLog;
 use DB;
 use Request;
 use Datatable;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -34,6 +35,9 @@ class UsersController extends Controller
 
         //$users = User::all();
         //return view('User.index',['users'=>$users]);
+        $activity_log_data = $this->userData();
+        $activity_log_data['action'] = 'view list';
+        ActivityLog::create($activity_log_data);
         return view('users.index');
     }
 
@@ -64,14 +68,15 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-
     public function createUser(){
         $data = Request::all();
-        
-        
         $data['password'] = Hash::make($data['password']);
         User::create($data);
-        //return $data;        
+
+        $activity_log_data = $this->userData();
+        $activity_log_data['action'] = 'create user: '.$data['username'];
+        ActivityLog::create($activity_log_data);
+
         return redirect('users');
     }
 
@@ -107,11 +112,6 @@ class UsersController extends Controller
     {
         $users = User::find($id);
 
-        //$udsers = DB::table('users')->where('id', '=', $id)->get();
-
-        //dd($users);
-        //return $users;
-        
         return view('users.edit',compact('users'));
     }
     public function saveEdit(){
@@ -128,24 +128,23 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $activity_log_data = $this->userData();
+        $activity_log_data['action'] = 'update user:'.$id;
+        ActivityLog::create($activity_log_data);
+
         $rules = array(
             'username'       => 'required'
-            
         );
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
+
             return Redirect::to('users/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         } else {
-            // store
             $user = User::find($id);
             $user->username       = Input::get('username');
             $user->save();
-            
-
-            // redirect
-            Session::flash('message', 'Successfully updated user!');
             return Redirect::to('users');
         }
 
@@ -162,8 +161,10 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        // redirect
-        Session::flash('message', 'Successfully deleted the user!');
+        $activity_log_data = $this->userData();
+        $activity_log_data['action'] = 'delete user:'.$id;
+        ActivityLog::create($activity_log_data);
+
         return Redirect::to('users');
     }
 
@@ -222,8 +223,37 @@ class UsersController extends Controller
           //} 
 
         }
-        
     }
+
+    /*
+        return auth user data for data table activity logging
+    */
+    public function userData(){
+        $user_id = Auth::user()->id;
+        $username = Auth::user()->username;
+        $current_url = Request::path();
+        $ip_address = Request::ip();
+
+        $activity_log_data = array(
+            'user_id'       => $user_id,
+            'username'      => $username,
+            'current_url'   => $current_url,
+            'ip_address'    => $ip_address
+            );
+
+        return $activity_log_data;
+    }
+
+    /*
+        show logs to user
+    */
+    public function logs()
+    {
+        $user_id = Auth::user()->id;
+        $logs = ActivityLog::where('user_id', '>', "'".$user_id."'")->get();
+        return view('users.logs',compact('logs'));
+    }
+
     
 }
 

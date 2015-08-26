@@ -5,6 +5,8 @@
 	<hr />
 
 	<button id="addRow">ADD</button>
+	<button id="btn-show-acts">SHOW YOUR ACTIVITIES</button>
+	<button id="btn-logout">LOGOUT</button>
 	<br /><br />
 
 	<div id="dt-table">
@@ -25,6 +27,14 @@
 		jQuery('#addRow').click(function(){
 			//window.location = 'users/create';
 			window.location = '/users/create';
+		});
+
+		jQuery('#btn-show-acts').click(function(){
+			window.location = '/users/logs';
+		});
+
+		jQuery('#btn-logout').click(function(){
+			window.location = '/accounts/logout';
 		});
 
 

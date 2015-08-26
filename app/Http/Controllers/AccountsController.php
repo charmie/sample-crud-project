@@ -78,8 +78,8 @@ class AccountsController extends Controller
     */
     public function dashboard(){
         $authStatus = Auth::check();
-        
-        return view('accounts.dashboard');
+        return redirect('users');
+        //return view('accounts.dashboard');
     }
 
     /*
@@ -94,8 +94,7 @@ class AccountsController extends Controller
     */
     public function logout(){
         Auth::logout();
+        return redirect('accounts/login');
         //dd($authStatus);
     }
-
-
 }
