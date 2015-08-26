@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\User;
 use DB;
 use Request;
+use Response;
 use Datatable;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 
 
@@ -24,7 +27,10 @@ class AccountsController extends Controller
 {
     public function login()
     {
+        //$method = $this->method();
         
+        //dd(Request::method().' '.Request::fullUrl());
+          
         return view('accounts.login');
     }
 

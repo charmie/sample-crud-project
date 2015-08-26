@@ -23,7 +23,8 @@
     <script>
 	jQuery(document).ready(function(){
 		jQuery('#addRow').click(function(){
-			window.location = 'users/create';
+			//window.location = 'users/create';
+			window.location = '/users/create';
 		});
 
 

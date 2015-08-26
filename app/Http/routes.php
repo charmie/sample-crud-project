@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 Route::get('/', function () {
 	return view('welcome');
 
@@ -71,30 +72,49 @@ Route::get('/', function () {
     
 });
 
- Route::get('about','PagesController@about');
- Route::get('contact','PagesController@contact');
- Route::get('articles','ArticlesController@index');
- Route::get('articles/{id}','ArticlesController@show');
- Route::get('articles/create','ArticlesController@create');
- Route::get('records','RecordsController@index');
- Route::get('records/add','RecordsController@create');
- Route::get('records/display','RecordsController@getAllRecords');
- Route::post('records/process_add', 'RecordsController@process_add');
- Route::resource('users','UsersController');
- Route::get('users','UsersController@index');
- Route::get('api/users', array('as'=>'api.users', 'uses'=>'UsersController@getDatatable'));
-  Route::get('users/create','UsersController@create');
-
- Route::post('users/createUser','UsersController@createUser');
- Route::get('users/{id}/edit','UsersController@edit');
- Route::put('users/{id}','UsersController@update');
- Route::get('users/{id}/destroy','UsersController@destroy');
-
- Route::get('accounts/login','AccountsController@login');
- Route::post('accounts/userLogin','AccountsController@userLogin');
-
-
+Route::group(['middleware' => 'logs'], function () {
+	Route::get('accounts/login','AccountsController@login');
+	Route::post('accounts/userLogin','AccountsController@userLogin');
 	Route::get('accounts/dashboard','AccountsController@dashboard');
 	Route::get('accounts/halt','AccountsController@halt');
+	Route::resource('users','UsersController');
+	Route::get('users','UsersController@index');
+	Route::get('api/users', array('as'=>'api.users', 'uses'=>'UsersController@getDatatable'));
+	Route::get('users/create','UsersController@create');
+
+	Route::post('users/createUser','UsersController@createUser');
+	Route::get('users/{id}/edit','UsersController@edit');
+	Route::put('users/{id}','UsersController@update');
+	Route::get('users/{id}/destroy','UsersController@destroy');
+});
+	
+	Route::get('about','PagesController@about');
+	Route::get('contact','PagesController@contact');
+	Route::get('articles','ArticlesController@index');
+	Route::get('articles/{id}','ArticlesController@show');
+	Route::get('articles/create','ArticlesController@create');
+	Route::get('records','RecordsController@index');
+	Route::get('records/add','RecordsController@create');
+	Route::get('records/display','RecordsController@getAllRecords');
+	Route::post('records/process_add', 'RecordsController@process_add');
+	
+	//Route::resource('users','UsersController');
+	/*
+	Route::get('users','UsersController@index');
+	Route::get('api/users', array('as'=>'api.users', 'uses'=>'UsersController@getDatatable'));
+	Route::get('users/create','UsersController@create');
+
+	Route::post('users/createUser','UsersController@createUser');
+	Route::get('users/{id}/edit','UsersController@edit');
+	Route::put('users/{id}','UsersController@update');
+	Route::get('users/{id}/destroy','UsersController@destroy');
+	*/
+	//Route::get('accounts/login','AccountsController@login');
+	//$app->get('accounts/login','AccountsController@login');
+	//Route::post('accounts/userLogin','AccountsController@userLogin');
+
+
+	//Route::get('accounts/dashboard','AccountsController@dashboard');
+	//Route::get('accounts/halt','AccountsController@halt');
 
  
