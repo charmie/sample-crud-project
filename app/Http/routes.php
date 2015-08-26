@@ -73,20 +73,36 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'logs'], function () {
-	Route::get('accounts/login','AccountsController@login');
-	Route::post('accounts/userLogin','AccountsController@userLogin');
-	Route::get('accounts/dashboard','AccountsController@dashboard');
-	Route::get('accounts/halt','AccountsController@halt');
 	Route::resource('users','UsersController');
 	Route::get('users','UsersController@index');
 	Route::get('api/users', array('as'=>'api.users', 'uses'=>'UsersController@getDatatable'));
 	Route::get('users/create','UsersController@create');
+	Route::post('users/createUser','UsersController@createUser');
+	Route::get('users/{id}/edit','UsersController@edit');
+	Route::put('users/{id}','UsersController@update');
+	Route::get('users/{id}/destroy','UsersController@destroy');
 
+	Route::get('accounts/logout','AccountsController@logout');
+	Route::get('accounts/login','AccountsController@login');
+	Route::post('accounts/userLogin','AccountsController@userLogin');
+	Route::get('accounts/dashboard','AccountsController@dashboard');
+	Route::get('accounts/halt','AccountsController@halt');
+});
+
+Route::group(['middleware'=>'auth'],function(){
+	Route::get('accounts/dashboard','AccountsController@dashboard');
+	Route::resource('users','UsersController');
+	Route::get('users','UsersController@index');
+	Route::get('api/users', array('as'=>'api.users', 'uses'=>'UsersController@getDatatable'));
+	Route::get('users/create','UsersController@create');
 	Route::post('users/createUser','UsersController@createUser');
 	Route::get('users/{id}/edit','UsersController@edit');
 	Route::put('users/{id}','UsersController@update');
 	Route::get('users/{id}/destroy','UsersController@destroy');
 });
+
+
+
 	
 	Route::get('about','PagesController@about');
 	Route::get('contact','PagesController@contact');

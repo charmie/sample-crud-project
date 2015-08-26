@@ -30,7 +30,6 @@ class AccountsController extends Controller
         //$method = $this->method();
         
         //dd(Request::method().' '.Request::fullUrl());
-          
         return view('accounts.login');
     }
 
@@ -78,6 +77,8 @@ class AccountsController extends Controller
         user account dashboard
     */
     public function dashboard(){
+        $authStatus = Auth::check();
+        
         return view('accounts.dashboard');
     }
 
@@ -87,4 +88,14 @@ class AccountsController extends Controller
     public function halt(){
         return view('accounts.halt');
     }
+
+    /*
+        logout user
+    */
+    public function logout(){
+        Auth::logout();
+        //dd($authStatus);
+    }
+
+
 }
