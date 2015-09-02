@@ -32,9 +32,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $activitLogData = $this->userData();
-        $$activitLogData['action'] = 'view list';
-        ActivityLog::create($$activitLogData);
+        $activityLogData = $this->userData();
+        $activityLogData['action'] = 'view list';
+        ActivityLog::create($activityLogData);
         return view('users.index');
     }
 
@@ -70,9 +70,9 @@ class UsersController extends Controller
         $data['password'] = Hash::make($data['password']);
         User::create($data);
 
-        $activitLogData = $this->userData();
-        $activitLogData['action'] = 'create user: '.$data['username'];
-        ActivityLog::create($activitLogData);
+        $activityLogData = $this->userData();
+        $activityLogData['action'] = 'create user: '.$data['username'];
+        ActivityLog::create($activityLogData);
 
         return redirect('users');
     }
@@ -125,9 +125,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $activitLogData = $this->userData();
-        $activitLogData['action'] = 'update user:'.$id;
-        ActivityLog::create($activitLogData);
+        $activityLogData = $this->userData();
+        $activityLogData['action'] = 'update user:'.$id;
+        ActivityLog::create($activityLogData);
 
         $rules = array(
             'username'       => 'required'
@@ -158,9 +158,9 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        $activitLogData = $this->userData();
-        $activitLogData['action'] = 'delete user:'.$id;
-        ActivityLog::create($activitLogData);
+        $activityLogData = $this->userData();
+        $activityLogData['action'] = 'delete user:'.$id;
+        ActivityLog::create($activityLogData);
 
         return Redirect::to('users');
     }
