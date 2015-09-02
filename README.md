@@ -1,5 +1,4 @@
 # sample-crud-project
-# created by: Charm Sorila
 
 1. Clone the project in your local machine
 2. Install Composer in the respective folder where the project is cloned
