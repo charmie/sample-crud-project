@@ -18,8 +18,7 @@ class LogsMiddleware
     public function handle(Request $request, Closure $next)
     {
         
-        //logging goes here
-        //<space><route><space><array/object>
+        //PATTERN: <space><route><space><array/object>
         
         Log::info($request->path().' '.print_r($request->all(),true));
         return $next($request);

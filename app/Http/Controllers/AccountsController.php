@@ -27,9 +27,6 @@ class AccountsController extends Controller
 {
     public function login()
     {
-        //$method = $this->method();
-        
-        //dd(Request::method().' '.Request::fullUrl());
         return view('accounts.login');
     }
 
@@ -57,14 +54,13 @@ class AccountsController extends Controller
                 'password' => Input::get('password')
               );
         }
-        //dd($userdata);
+
         $userData = array('username' => $userdata['username'], 'password' => $userdata['password']);            
 
         $attempt = Auth::attempt($userData);
-        //dd($attempt);
         
+       
         if($attempt){
-            //dd('sup');
             return redirect('accounts/dashboard');
         }
         else{
@@ -79,7 +75,6 @@ class AccountsController extends Controller
     public function dashboard(){
         $authStatus = Auth::check();
         return redirect('users');
-        //return view('accounts.dashboard');
     }
 
     /*
@@ -95,6 +90,5 @@ class AccountsController extends Controller
     public function logout(){
         Auth::logout();
         return redirect('accounts/login');
-        //dd($authStatus);
     }
 }

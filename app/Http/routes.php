@@ -11,67 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-	return view('welcome');
-
-	/*
-	$name = 'Ms. Charm';
-    return view('welcome')->with('ngalan',$name);
-    */
-    /*
-    $users = DB::table('users')->get();
-    return $users;
-    */
-    /*
-    $user = DB::table('users')->find(1);
-    dd($user->username);
-	*/
-    /*
-	$users = DB::table('users')->where('username','!=','strat_emp1')->get();
-	return $users;
-	*/
-	/*
-	$users = App\User::where('username','!=', 'strat_emp1')->get();;
-	$users = App\User::all();
-	return $users;
-	*/
-	/*
-	$user = new App\User;
-	$user->username = 'strat_emp3';
-	$user->password = Hash::make('password');
-	$user->save();
-	return App\User::all();
-	*/
-	/*
-	// CREATE
-	App\User::create([
-		'username' => 'strat_emp4',
-		'password' => Hash::make('password')
-	]); // -- for mass assignment
-
-	return App\User::all();
-	*/
-	/*
-	//UPDATE
-	$user = App\User::find(4);
-	$user->username = 'duplicate entry';
-	$user->save();
-
-	return App\User::all();
-	*/
-	/*
-	//DELETE
-	$user = App\User::find(4);
-	$user->delete();
-	return App\User::all();
-	*/
-	/*
-	//GET USERS IN DESIRED ORDER
-	return App\User::orderBy('created_at','desc')->take(3)->get();
-	*/
-    
-});
-
+Route::get('/','AccountsController@login');
 
 Route::group(['middleware' => 'logs'], function () {
 	Route::get('users/logs','UsersController@logs');
@@ -83,21 +23,16 @@ Route::group(['middleware' => 'logs'], function () {
 	Route::get('users/{id}/edit','UsersController@edit');
 	Route::put('users/{id}','UsersController@update');
 	Route::get('users/{id}/destroy','UsersController@destroy');
-	
-	
 
 	Route::get('accounts/logout','AccountsController@logout');
 	Route::get('accounts/login','AccountsController@login');
 	Route::post('accounts/userLogin','AccountsController@userLogin');
 	Route::get('accounts/dashboard','AccountsController@dashboard');
 	Route::get('accounts/halt','AccountsController@halt');
-
-	
 });
 
 Route::group(['middleware'=>'auth'],function(){
 	Route::get('accounts/dashboard','AccountsController@dashboard');
-	//Route::resource('users','UsersController');
 	Route::get('users','UsersController@index');
 	Route::get('api/users', array('as'=>'api.users', 'uses'=>'UsersController@getDatatable'));
 	Route::get('users/create','UsersController@create');
@@ -105,7 +40,6 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('users/{id}/edit','UsersController@edit');
 	Route::put('users/{id}','UsersController@update');
 	Route::get('users/{id}/destroy','UsersController@destroy');
-	
 });
 	
 Route::get('about','PagesController@about');

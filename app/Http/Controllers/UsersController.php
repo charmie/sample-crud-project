@@ -32,12 +32,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-
-        //$users = User::all();
-        //return view('User.index',['users'=>$users]);
-        $activity_log_data = $this->userData();
-        $activity_log_data['action'] = 'view list';
-        ActivityLog::create($activity_log_data);
+        $activitLogData = $this->userData();
+        $$activitLogData['action'] = 'view list';
+        ActivityLog::create($$activitLogData);
         return view('users.index');
     }
 
@@ -73,9 +70,9 @@ class UsersController extends Controller
         $data['password'] = Hash::make($data['password']);
         User::create($data);
 
-        $activity_log_data = $this->userData();
-        $activity_log_data['action'] = 'create user: '.$data['username'];
-        ActivityLog::create($activity_log_data);
+        $activitLogData = $this->userData();
+        $activitLogData['action'] = 'create user: '.$data['username'];
+        ActivityLog::create($activitLogData);
 
         return redirect('users');
     }
@@ -128,9 +125,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $activity_log_data = $this->userData();
-        $activity_log_data['action'] = 'update user:'.$id;
-        ActivityLog::create($activity_log_data);
+        $activitLogData = $this->userData();
+        $activitLogData['action'] = 'update user:'.$id;
+        ActivityLog::create($activitLogData);
 
         $rules = array(
             'username'       => 'required'
@@ -161,9 +158,9 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        $activity_log_data = $this->userData();
-        $activity_log_data['action'] = 'delete user:'.$id;
-        ActivityLog::create($activity_log_data);
+        $activitLogData = $this->userData();
+        $activitLogData['action'] = 'delete user:'.$id;
+        ActivityLog::create($activitLogData);
 
         return Redirect::to('users');
     }
@@ -181,11 +178,8 @@ class UsersController extends Controller
      * User login submit
      */
     public function userLogin(){
-        // Getting all post data
         $data = Request::all();
-        //dd($data);
-        
-        // Applying validation rules.
+
         $rules = array(
             'username' => 'required',
             'password' => 'required|min:6' ,
@@ -193,8 +187,6 @@ class UsersController extends Controller
         $validator = Validator::make($data, $rules);
 
         if ($validator->fails()){
-          // If validation falis redirect back to login.
-          //return Redirect::to('/')->withInput(Input::except('password'))->withErrors($validator);
             echo "failed";
         }
         else {
@@ -202,26 +194,14 @@ class UsersController extends Controller
                 'username' => Request::get('username'),
                 'password' => Request::get('password')
               );
-          //dd($userdata);
-            
-          // doing login.
-          //if (Auth::validate($userdata)) {
-        
-              //return Redirect::intended('books');
-                if (Auth::attempt($userdata)) {
-            // Authentication passed...
-            //return redirect()->intended('dashboard');
-                    echo "success";
 
-                    Session::flash('message', 'Success'); 
-        
-                
-            }
-            else{
-                echo "wait";
-            }
-          //} 
-
+          if (Auth::attempt($userdata)) {
+            echo "success";
+            Session::flash('message', 'Success'); 
+          }
+          else{
+            echo "wait";
+          }
         }
     }
 
@@ -229,19 +209,19 @@ class UsersController extends Controller
         return auth user data for data table activity logging
     */
     public function userData(){
-        $user_id = Auth::user()->id;
+        $userId = Auth::user()->id;
         $username = Auth::user()->username;
-        $current_url = Request::path();
-        $ip_address = Request::ip();
+        $currentUrl = Request::path();
+        $ipAddress = Request::ip();
 
-        $activity_log_data = array(
-            'user_id'       => $user_id,
+        $activityLogData = array(
+            'user_id'       => $userId,
             'username'      => $username,
-            'current_url'   => $current_url,
-            'ip_address'    => $ip_address
+            'current_url'   => $currentUrl,
+            'ip_address'    => $ipAddress
             );
 
-        return $activity_log_data;
+        return $activityLogData;
     }
 
     /*
@@ -249,8 +229,8 @@ class UsersController extends Controller
     */
     public function logs()
     {
-        $user_id = Auth::user()->id;
-        $logs = ActivityLog::where('user_id', '>', "'".$user_id."'")->get();
+        $userId = Auth::user()->id;
+        $logs = ActivityLog::where('user_id', '>', "'".$userId."'")->get();
         return view('users.logs',compact('logs'));
     }
 
