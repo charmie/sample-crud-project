@@ -23,10 +23,7 @@ class AccountsController extends Controller
 {
     public function login()
     {
-        echo App::environment();
         return view('accounts.login');
-
-
     }
 
     /**

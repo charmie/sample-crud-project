@@ -1,16 +1,40 @@
 @extends('app')
 
 @section('content')
-	<h1>User Login</h1>
+	
 	<hr />
-	{!! Form::open(array('url' => 'accounts/userLogin')) !!}
-	    {!! Form::text('username') !!}
-	    {!! Form::password('password') !!}
-	    {!! Form::submit('Login') !!}
-	{!! Form::close() !!}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="jumbotron">
+					<h1>User Login</h1>
+					<p>
+						{!! Form::open(array('url' => 'accounts/userLogin')) !!}
+							{!! Form::label('username', 'Username') !!}
+						    {!! Form::text('username',null,array('class'=>'form-control')) !!}
+						    {!! Form::label('password', 'Password') !!}
+						    {!! Form::password('password', array('class'=>'form-control')) !!}
+						    <br /><br />
+						    <div style="text-align:right;">
+						    {!! Form::submit('Login',array('class'=>'btn btn-primary btn-large')) !!}
+						    </div>
+						{!! Form::close() !!}
+					</p>
+					<br /><br /><br />
+				
+					<div style="text-align:right;">
+						Don't have an account yet?<br />
+						<button id="btn-register" class="btn btn-primary btn-large">Register</button>
+					</div>	
+					
 
-	<br /><br />
-	<button id="btn-register">Register</button>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	
 @stop
 
 @section('javascript')
