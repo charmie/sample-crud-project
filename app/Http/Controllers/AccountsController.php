@@ -91,4 +91,42 @@ class AccountsController extends Controller
         Auth::logout();
         return redirect('accounts/login');
     }
+
+    public function registration(){
+        return view('accounts.registration');
+    }
+
+    public function registerAccount(){
+        $data = Input::all();
+
+        $rules = array(
+            'username' => 'required',
+            'password' => 'required|min:6',
+        );
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()){
+            return redirect('accounts/registrationFailed');
+        }
+        else {
+            $userdata = array(
+                'username' => Input::get('username'),
+                'password' => Input::get('password')
+              );
+            $data['password'] = Hash::make(Input::get('username'));
+            User::create($data);
+            return redirect('accounts/registrationSuccess');
+        }
+
+    }
+
+    public function registrationSuccess(){
+        return view('accounts.registrationSuccess');
+    }
+
+    public function registrationFailed(){
+        return view('accounts.registrationFailed');
+    }
 }
+    

@@ -29,6 +29,10 @@ Route::group(['middleware' => 'logs'], function () {
 	Route::post('accounts/userLogin','AccountsController@userLogin');
 	Route::get('accounts/dashboard','AccountsController@dashboard');
 	Route::get('accounts/halt','AccountsController@halt');
+	Route::get('accounts/registration','AccountsController@registration');
+	Route::post('accounts/registerAccount','AccountsController@registerAccount');
+	Route::get('accounts/registrationSuccess','AccountsController@registrationSuccess');
+	Route::get('accounts/registrationFailed','AccountsController@registrationFailed');
 });
 
 Route::group(['middleware'=>'auth'],function(){
