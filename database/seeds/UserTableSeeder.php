@@ -11,6 +11,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class, 3)->create();
+         User::create(['username' => 'duterte','password' => Hash::make($data['forpresident'])]);
     }
 }

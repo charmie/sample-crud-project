@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
-//use Auth;
 use App\User;
 use App\ActivityLog;
 use DB;
 use Request;
 use Datatable;
-
-// use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -20,8 +15,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-
 
 class UsersController extends Controller
 {
@@ -32,7 +25,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $activityLogData = $this->userData();
+        $activityLogData = self::userData();
         $activityLogData['action'] = 'view list';
         ActivityLog::create($activityLogData);
         return view('users.index');
@@ -70,33 +63,11 @@ class UsersController extends Controller
         $data['password'] = Hash::make($data['password']);
         User::create($data);
 
-        $activityLogData = $this->userData();
+        $activityLogData = self::userData();
         $activityLogData['action'] = 'create user: '.$data['username'];
         ActivityLog::create($activityLogData);
 
         return redirect('users');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -125,7 +96,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $activityLogData = $this->userData();
+        $activityLogData = self::userData();
         $activityLogData['action'] = 'update user:'.$id;
         ActivityLog::create($activityLogData);
 
@@ -158,7 +129,7 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        $activityLogData = $this->userData();
+        $activityLogData = self::userData();
         $activityLogData['action'] = 'delete user:'.$id;
         ActivityLog::create($activityLogData);
 
@@ -208,7 +179,7 @@ class UsersController extends Controller
     /*
         return auth user data for data table activity logging
     */
-    public function userData(){
+    private static function userData(){
         $userId = Auth::user()->id;
         $username = Auth::user()->username;
         $currentUrl = Request::path();
@@ -233,9 +204,5 @@ class UsersController extends Controller
         $logs = ActivityLog::where('user_id', '>', "'".$userId."'")->get();
         return view('users.logs',compact('logs'));
     }
-
-    
-
-    
 }
 

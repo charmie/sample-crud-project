@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
-
 use App\User;
 use DB;
 use Request;
@@ -19,9 +17,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-
-
-
 
 class AccountsController extends Controller
 {
