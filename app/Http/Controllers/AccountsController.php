@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\User;
 use DB;
 use Request;
@@ -22,7 +23,10 @@ class AccountsController extends Controller
 {
     public function login()
     {
+        echo App::environment();
         return view('accounts.login');
+
+
     }
 
     /**
