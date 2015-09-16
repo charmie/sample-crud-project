@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+
 
 class RouteServiceProvider extends ServiceProvider
 {

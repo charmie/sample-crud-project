@@ -14,6 +14,7 @@
 Route::get('/','AccountsController@login');
 
 Route::group(['middleware' => 'logs'], function () {
+	Route::get('users/authenticateLogin','UsersController@authenticateLogin');
 	Route::get('users/logs','UsersController@logs');
 	Route::resource('users','UsersController');
 	Route::get('users','UsersController@index');

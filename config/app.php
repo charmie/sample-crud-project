@@ -139,6 +139,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         'Collective\Html\HtmlServiceProvider',
         Chumper\Datatable\DatatableServiceProvider::class,
+        'Cartalyst\Sentry\SentryServiceProvider',
+
         
 
         
@@ -202,6 +204,8 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
         'Datatable' => 'Chumper\Datatable\Facades\DatatableFacade',
+        'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+
 
 
         
